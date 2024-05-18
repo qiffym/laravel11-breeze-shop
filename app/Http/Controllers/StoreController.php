@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRequest;
 use App\Models\Store;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class StoreController extends Controller
@@ -24,13 +26,21 @@ class StoreController extends Controller
      */
     public function create(): View
     {
-        return view('stores.create');
+        return view('stores.form', [
+            'store' => new Store(),
+            'page_meta' => [
+                'title' => 'Create store',
+                'description' => 'Create your own store',
+                'method' => 'POST',
+                'url' => route('stores.store')
+            ]
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
         $file = $request->file('logo');
 
@@ -55,15 +65,25 @@ class StoreController extends Controller
      */
     public function edit(Store $store): View
     {
-        return view('stores.edit');
+        return view('stores.form', [
+            'store' => $store,
+            'page_meta' => [
+                'title' => 'Edit store',
+                'description' => 'Edit store: ' . $store->name,
+                'method' => 'PUT',
+                'url' => route('stores.update', $store)
+            ]
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreRequest $request, Store $store)
+    public function update(StoreRequest $request, Store $store): RedirectResponse
     {
-        //
+        $store->update($request->validated());
+
+        return to_route('stores.index');
     }
 
     /**
