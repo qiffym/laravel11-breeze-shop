@@ -20,9 +20,11 @@
                         <x-card.description>
                             {{ $store->description }}
                         </x-card.description>
-                        @if (auth()->user()->id === $store->id)
-                            <a href="{{ route('stores.edit', $store) }}" class="text-blue-600 underline">Edit</a>
-                        @endif
+                        @auth
+                            @if (auth()->user()->id === $store->user_id)
+                                <a href="{{ route('stores.edit', $store) }}" class="text-blue-600 underline">Edit</a>
+                            @endif
+                        @endauth
                     </x-card.header>
                 </x-card>
             @endforeach

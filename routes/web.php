@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Controllers\HomeController::class)->name('home');
 
 Route::get('/dashboard', Controllers\DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('stores', [Controllers\StoreController::class, 'index'])->name('stores.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
@@ -13,7 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Stores
-    Route::resource('stores', Controllers\StoreController::class);
+    Route::resource('stores', Controllers\StoreController::class)->except('index');
 });
 
 require __DIR__ . '/auth.php';

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreRequest;
 use App\Models\Store;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -57,7 +58,9 @@ class StoreController extends Controller
      */
     public function show(Store $store): View
     {
-        return view('stores.show');
+        return view('stores.show', [
+            'store' => $store,
+        ]);
     }
 
     /**
@@ -65,6 +68,7 @@ class StoreController extends Controller
      */
     public function edit(Store $store): View
     {
+        Gate::authorize('update', $store);
         return view('stores.form', [
             'store' => $store,
             'page_meta' => [
