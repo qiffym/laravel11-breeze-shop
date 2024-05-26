@@ -11,7 +11,7 @@
             @foreach ($stores as $store)
                 <x-card>
                     <div class="p-6 pb-0">
-                        <img src="{{ $store->logo }}" alt="{{ $store->name }}" class="rounded-lg size-16">
+                        <img src="{{ url($store->logo) }}" alt="{{ $store->name }}" class="rounded-lg size-16">
                     </div>
                     <x-card.header>
                         <x-card.title>

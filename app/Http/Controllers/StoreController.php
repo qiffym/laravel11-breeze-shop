@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StoreStatus;
 use App\Http\Requests\StoreRequest;
 use App\Models\Store;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class StoreController extends Controller
@@ -18,7 +19,7 @@ class StoreController extends Controller
     public function index(): View
     {
         return view('stores.index', [
-            'stores' => Store::query()->latest()->get()
+            'stores' => Store::query()->where('status', StoreStatus::ACTIVE)->latest()->get(),
         ]);
     }
 
@@ -50,7 +51,7 @@ class StoreController extends Controller
             'logo' => $file->store('images/stores')
         ]);
 
-        return to_route('stores.create')->with('message', 'Store has been created successfully');
+        return to_route('stores.index')->with('message', 'Store has been created successfully');
     }
 
     /**
@@ -85,7 +86,20 @@ class StoreController extends Controller
      */
     public function update(StoreRequest $request, Store $store): RedirectResponse
     {
-        $store->update($request->validated());
+        if ($request->hasFile('logo')) {
+            Storage::delete($store->logo);
+            $file = $request->file('logo');
+        } else {
+            $file = $store->logo;
+        }
+
+        dd($file);
+
+        $store->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'logo' => $file->store('images/stores')
+        ]);
 
         return to_route('stores.index');
     }
