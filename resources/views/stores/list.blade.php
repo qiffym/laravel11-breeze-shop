@@ -3,7 +3,7 @@
 <x-app-layout>
     @slot('title', 'List Stores')
     @slot('header')
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+        <h2 class="text-xl font-semibold leading-tight">
             {{ __('List Stores') }}
         </h2>
     @endslot
@@ -36,11 +36,11 @@
                                         @csrf
                                         @method('PUT')
 
-                                        <h2 class="text-lg font-medium text-gray-900">
+                                        <h2 class="text-lg font-medium text-zinc-900">
                                             {{ $store->name }}
                                         </h2>
 
-                                        <p class="mt-1 text-sm text-gray-600">
+                                        <p class="mt-1 text-sm text-zinc-600">
                                             {{ $store->description }}
                                         </p>
 

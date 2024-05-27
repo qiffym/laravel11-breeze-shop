@@ -3,7 +3,7 @@
         {{ $page_meta['title'] }}
     @endslot
     @slot('header')
-        <h2 class="text-xl font-semibold leading-tight text-gray-800">
+        <h2 class="text-xl font-semibold leading-tight">
             {{ __($page_meta['title']) }}
         </h2>
     @endslot
