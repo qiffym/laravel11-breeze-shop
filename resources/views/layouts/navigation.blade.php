@@ -42,12 +42,18 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('dashboard')">
-                                {{ __('Dashboard') }}
-                            </x-dropdown-link>
-
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
+                            </x-dropdown-link>
+
+                            @if (auth()->user()->isAdmin())
+                                <x-dropdown-link :href="route('stores.list')">
+                                    {{ __('List store') }}
+                                </x-dropdown-link>
+                            @endif
+
+                            <x-dropdown-link :href="route('stores.create')">
+                                {{ __('Create store') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->

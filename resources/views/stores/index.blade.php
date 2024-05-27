@@ -14,18 +14,18 @@
                         <img src="{{ url($store->logo) }}" alt="{{ $store->name }}" class="rounded-lg size-16">
                     </div>
                     <x-card.header>
-                        <x-card.title>
-                            {{ $store->name }}
-                        </x-card.title>
+                        <x-card.title>{{ $store->name }}</x-card.title>
                         <x-card.description>
                             {{ $store->description }}
                         </x-card.description>
+                    </x-card.header>
+                    <x-card.content>
                         @auth
                             @if (auth()->user()->id === $store->user_id)
                                 <a href="{{ route('stores.edit', $store) }}" class="text-blue-600 underline">Edit</a>
                             @endif
                         @endauth
-                    </x-card.header>
+                    </x-card.content>
                 </x-card>
             @endforeach
         </div>

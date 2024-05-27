@@ -13,9 +13,8 @@ use Illuminate\View\View;
 
 class StoreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+
     public function index(): View
     {
         return view('stores.index', [
@@ -23,9 +22,23 @@ class StoreController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function list(): View
+    {
+        $stores = Store::query()->latest()->paginate(10);
+        return view('stores.list', [
+            'stores' => $stores,
+        ]);
+    }
+
+    public function approve(Store $store): RedirectResponse
+    {
+        $store->status = StoreStatus::ACTIVE;
+        $store->save();
+
+        return redirect()->back();
+    }
+
+
     public function create(): View
     {
         return view('stores.form', [
@@ -39,9 +52,7 @@ class StoreController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreRequest $request): RedirectResponse
     {
         $file = $request->file('logo');
@@ -54,9 +65,7 @@ class StoreController extends Controller
         return to_route('stores.index')->with('message', 'Store has been created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Store $store): View
     {
         return view('stores.show', [
@@ -64,9 +73,7 @@ class StoreController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Store $store): View
     {
         Gate::authorize('update', $store);
@@ -81,9 +88,7 @@ class StoreController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(StoreRequest $request, Store $store): RedirectResponse
     {
         if ($request->hasFile('logo')) {
@@ -104,9 +109,7 @@ class StoreController extends Controller
         return to_route('stores.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Store $store)
     {
         //

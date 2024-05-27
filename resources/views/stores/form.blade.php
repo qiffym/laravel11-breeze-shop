@@ -18,6 +18,7 @@
                     {{ $page_meta['description'] }}
                 </x-card.description>
             </x-card.header>
+            <hr class="mt-6">
             <x-card.content>
                 <form action="{{ $page_meta['url'] }}" method="POST" enctype="multipart/form-data" class="[&>div]:mb-6"
                     novalidate>
