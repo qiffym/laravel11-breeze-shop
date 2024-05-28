@@ -7,10 +7,8 @@
     @endslot
 
     <x-container>
-        <div class="overflow-hidden shadow-sm bg-zinc-800 sm:rounded-lg">
-            <div class="p-6">
-                {{ __("You're logged in!") }}
-            </div>
-        </div>
+        <x-card class="p-6">
+            {{ __("You're logged in!") }}
+        </x-card>
     </x-container>
 </x-app-layout>

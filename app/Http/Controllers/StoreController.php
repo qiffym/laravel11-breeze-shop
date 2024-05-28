@@ -6,7 +6,7 @@ use App\Enums\StoreStatus;
 use App\Http\Requests\StoreRequest;
 use App\Models\Store;
 use Illuminate\Http\RedirectResponse;
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -21,23 +21,6 @@ class StoreController extends Controller
             'stores' => Store::query()->where('status', StoreStatus::ACTIVE)->latest()->get(),
         ]);
     }
-
-    public function list(): View
-    {
-        $stores = Store::query()->latest()->paginate(8);
-        return view('stores.list', [
-            'stores' => $stores,
-        ]);
-    }
-
-    public function approve(Store $store): RedirectResponse
-    {
-        $store->status = StoreStatus::ACTIVE;
-        $store->save();
-
-        return redirect()->back();
-    }
-
 
     public function create(): View
     {
@@ -111,5 +94,34 @@ class StoreController extends Controller
     public function destroy(Store $store)
     {
         //
+    }
+
+    public function list(Request $request): View
+    {
+        $stores = Store::query()->with('user:id,name')->latest()->paginate(8);
+        return view('stores.list', [
+            'stores' => $stores,
+            'isAdmin' => $request->user()->isAdmin()
+        ]);
+    }
+
+    public function approve(Store $store): RedirectResponse
+    {
+        $store->status = StoreStatus::ACTIVE;
+        $store->save();
+
+        return redirect()->back();
+    }
+
+    public function mine(Request $request): View
+    {
+        $stores = Store::query()
+            ->where('user_id', $request->user()->id)
+            ->latest()
+            ->paginate(8);
+
+        return view('stores.mine', [
+            'stores' => $stores,
+        ]);
     }
 }
