@@ -6,7 +6,7 @@ use App\Enums\StoreStatus;
 use App\Http\Requests\StoreRequest;
 use App\Models\Store;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -24,7 +24,7 @@ class StoreController extends Controller
 
     public function list(): View
     {
-        $stores = Store::query()->latest()->paginate(10);
+        $stores = Store::query()->latest()->paginate(8);
         return view('stores.list', [
             'stores' => $stores,
         ]);
@@ -97,8 +97,6 @@ class StoreController extends Controller
         } else {
             $file = $store->logo;
         }
-
-        dd($file);
 
         $store->update([
             'name' => $request->name,

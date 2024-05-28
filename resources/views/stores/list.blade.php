@@ -9,13 +9,14 @@
     @endslot
 
     <x-container>
-        <div class="grid grid-cols-3 gap-6">
+        <div class="grid grid-cols-4 gap-6">
             @foreach ($stores as $store)
                 <x-card>
                     <x-card.header>
                         <x-card.title>{{ $store->name }}</x-card.title>
                         <x-card.description>
-                            Dibuat: {{ $store->created_at->format('d F Y') }} oleh {{ $store->user->name }}
+                            <small>Created at {{ $store->created_at->format('d F Y') }} by
+                                {{ $store->user->name }}</small>
                         </x-card.description>
                     </x-card.header>
                     <x-card.content>
@@ -60,6 +61,10 @@
                     </x-card.content>
                 </x-card>
             @endforeach
+        </div>
+
+        <div class="mt-10">
+            {{ $stores->links() }}
         </div>
     </x-container>
 </x-app-layout>
