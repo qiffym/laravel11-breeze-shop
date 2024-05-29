@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
     {
         $user = Models\User::create([
             'name' => 'Qiff Ya Muhammad',
-            'email' => 'qiffym@admin.test',
+            'email' => 'qiffym@admin.com',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
         ]);

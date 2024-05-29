@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Store;
+use Illuminate\Database\Eloquent\Model;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,5 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class
         ]);
+
+        Model::withoutEvents(fn () => Store::factory(5)->hasProducts(20)->create());
     }
 }

@@ -16,8 +16,11 @@
 
         <x-card.content>
             <section>
-                <p class="mb-6">
-                    {{ $store->description }}
+                <p class="mb-2">
+                    {{ str($store->description)->limit() }}
+                </p>
+                <p class="text-sm text-zinc-400">
+                    {{ $store->products_count }} {{ str('product')->plural($store->products_count) }}
                 </p>
             </section>
         </x-card.content>

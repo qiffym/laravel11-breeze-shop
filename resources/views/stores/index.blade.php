@@ -9,14 +9,19 @@
     <x-container>
         <div class="grid grid-cols-4 gap-6">
             @foreach ($stores as $store)
-                <x-card>
+                <x-card class="relative">
+                    <a href="{{ route('stores.show', $store) }}" class="absolute inset-0 size-full"></a>
                     <div class="p-6 pb-0">
-                        <img src="{{ url($store->logo) }}" alt="{{ $store->name }}" class="rounded-lg size-16">
+                        @if ($store->logo)
+                            <img src="{{ url($store->logo) }}" alt="{{ $store->name }}" class="rounded-lg size-16">
+                        @else
+                            <div class="rounded-lg size-16 bg-zinc-800"></div>
+                        @endif
                     </div>
                     <x-card.header>
                         <x-card.title>{{ $store->name }}</x-card.title>
                         <x-card.description>
-                            {{ $store->description }}
+                            {{ str($store->description)->limit() }}
                         </x-card.description>
                     </x-card.header>
                     <x-card.content>

@@ -52,7 +52,8 @@ class StoreController extends Controller
     public function show(Store $store): View
     {
         return view('stores.show', [
-            'store' => $store,
+            'store' => $store->loadCount('products'),
+            'products' => $store->products()->latest()->paginate(12),
         ]);
     }
 
@@ -98,7 +99,7 @@ class StoreController extends Controller
 
     public function list(Request $request): View
     {
-        $stores = Store::query()->with('user:id,name')->latest()->paginate(8);
+        $stores = Store::query()->with('user:id,name')->withCount('products')->latest()->paginate(8);
         return view('stores.list', [
             'stores' => $stores,
             'isAdmin' => $request->user()->isAdmin()
