@@ -22,7 +22,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'logo' => [$this->method() === 'POST' ? 'required' : '', 'image', 'mimes:png,jpg,jpeg,gif,svg', 'max:2048'],
+            'logo' => [$this->method() === 'POST' ? 'required' : 'sometimes', 'image', 'mimes:png,jpg,jpeg,gif,svg', 'max:2048'],
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'description' => ['required', 'string', 'min:3'],
         ];

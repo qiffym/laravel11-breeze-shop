@@ -85,8 +85,7 @@ class StoreController extends Controller
         }
 
         $store->update([
-            'name' => $request->name,
-            'description' => $request->description,
+            ...$request->validated(),
             'logo' => $file
         ]);
 

@@ -29,10 +29,15 @@
     <x-card.footer>
         <div class="flex items-center justify-between">
             <x-badge>{{ $store->status }}</x-badge>
+            @auth
+                @if (auth()->user()->id === $store->user_id)
+                    <a href="{{ route('stores.edit', $store) }}" class="text-blue-600 underline">Edit</a>
+                @endif
+            @endauth
+
             @isset($isAdmin)
                 @if ($store->status === StoreStatus::PENDING)
-                    <x-primary-button class="" x-data=""
-                        x-on:click.prevent="$dispatch('open-modal', 'modal-{{ $store->id }}')">
+                    <x-primary-button class="" x-data="" x-on:click.prevent="$dispatch('open-modal', 'modal-{{ $store->id }}')">
                         {{ __('Approve') }}
                     </x-primary-button>
 

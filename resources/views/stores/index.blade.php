@@ -24,13 +24,13 @@
                             {{ str($store->description)->limit() }}
                         </x-card.description>
                     </x-card.header>
-                    <x-card.content>
+                    {{-- <x-card.content>
                         @auth
                             @if (auth()->user()->id === $store->user_id)
                                 <a href="{{ route('stores.edit', $store) }}" class="text-blue-600 underline">Edit</a>
                             @endif
                         @endauth
-                    </x-card.content>
+                    </x-card.content> --}}
                 </x-card>
             @endforeach
         </div>

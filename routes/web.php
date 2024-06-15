@@ -18,11 +18,16 @@ Route::middleware('auth')->group(function () {
         Route::put('stores/approve/{store}', [Controllers\StoreController::class, 'approve'])->name('stores.approve');
     });
 
-    Route::resource('stores.products', Controllers\ProductController::class)->except('show');
+    Route::resource('stores.products', Controllers\ProductController::class)->except('show')->parameters([
+        'stores' => 'store:slug',
+        'products' => 'product:slug',
+    ]);
 
     Route::middleware('verified')->group(function () {
         Route::get('stores/mine', [Controllers\StoreController::class, 'mine'])->name('stores.mine');
-        Route::resource('stores', Controllers\StoreController::class)->except(['index', 'show']);
+        Route::resource('stores', Controllers\StoreController::class)->except(['index', 'show'])->parameters([
+            'stores' => 'store:slug'
+        ]);
     });
 
     Route::get('/profile', [Controllers\ProfileController::class, 'edit'])->name('profile.edit');
